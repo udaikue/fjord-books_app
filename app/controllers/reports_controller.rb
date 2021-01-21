@@ -19,15 +19,14 @@ class ReportsController < ApplicationController
 
   def edit
     # 投稿者がログインユーザーでない場合はindexへリダイレクト
-    return if @report.poster_id == current_user.id
+    return if @report.user_id == current_user.id
 
     redirect_to reports_path
   end
 
   def create
     @report = Report.new(report_params)
-    # 投稿したUserのidを取得
-    @report.poster_id = current_user.id
+    @report.user_id = current_user.id
 
     if @report.save
       redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
@@ -60,6 +59,6 @@ class ReportsController < ApplicationController
   end
 
   def report_params
-    params.require(:report).permit(:title, :content, :poster_id)
+    params.require(:report).permit(:title, :content, :user_id)
   end
 end

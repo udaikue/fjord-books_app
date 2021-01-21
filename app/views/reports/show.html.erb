@@ -12,10 +12,10 @@
 
 <p>
   <strong><%= Report.human_attribute_name(:poster) %>:</strong>
-  <% if User.find(@commentable.poster_id).name.empty? %>
-    <%= User.find(@commentable.poster_id).email %>
+  <% if User.find(@commentable.user_id).name.empty? %>
+    <%= User.find(@commentable.user_id).email %>
   <% else %>
-   <%= User.find(@commentable.poster_id).name %>
+   <%= User.find(@commentable.user_id).name %>
   <% end %>
 </p>
 
@@ -26,7 +26,7 @@
 
 <%= render 'comments/comments' %>
 
-<% if User.find(@commentable.poster_id) == current_user %>
+<% if User.find(@commentable.user_id) == current_user %>
   <%= link_to t('views.common.edit'), edit_report_path(@commentable) %> |
 <% end %>
 <%= link_to t('views.common.back'), reports_path %>

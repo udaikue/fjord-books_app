@@ -5,10 +5,13 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @commentable.comments.new(comment_params)
-    # 投稿したUserのidを取得
-    @comment.poster_id = current_user.id
-    @comment.save
-    redirect_to @commentable
+    @comment.user_id = current_user.id
+
+    if @comment.save
+      redirect_to @commentable
+    else
+      redirect_to controller: :reports, action: :show, id: params[:report_id]
+    end
   end
 
   def destroy
@@ -19,11 +22,14 @@ class CommentsController < ApplicationController
   private
 
   def set_commentable
-    @commentable = Book.find(params[:book_id]) if params[:book_id]
-    @commentable = Report.find(params[:report_id]) if params[:report_id]
+    if params[:book_id]
+      @commentable = Book.find(params[:book_id])
+    elsif params[:report_id]
+      @commentable = Report.find(params[:report_id])
+    end
   end
 
   def comment_params
-    params.require(:comment).permit(:content, :poster_id)
+    params.require(:comment).permit(:content)
   end
 end

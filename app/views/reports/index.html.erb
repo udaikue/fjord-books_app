@@ -16,14 +16,14 @@
       <tr>
         <td><%= report.title %></td>
         <td><%= report.content %></td>
-        <% if User.find(report.poster_id).name.empty? %>
-          <td><%= User.find(report.poster_id).email %></td>
+        <% if User.find(report.user_id).name.empty? %>
+          <td><%= User.find(report.user_id).email %></td>
         <% else %>
-          <td><%= User.find(report.poster_id).name %></td>
+          <td><%= User.find(report.user_id).name %></td>
         <% end %>
         <td><%= report.created_at.strftime('%Y/%-m/%-d %-H:%M') %></td>
         <td><%= link_to t('views.common.show'), report %></td>
-        <% if User.find(report.poster_id) == current_user %>
+        <% if User.find(report.user_id) == current_user %>
           <td><%= link_to t('views.common.edit'), edit_report_path(report) %></td>
           <td><%= link_to t('views.common.destroy'), report, method: :delete, data: { confirm: t('views.common.delete_confirm') } %></td>
         <% end %>
