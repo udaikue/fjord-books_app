@@ -17,12 +17,7 @@ class ReportsController < ApplicationController
     @report = Report.new
   end
 
-  def edit
-    # 投稿者がログインユーザーでない場合はindexへリダイレクト
-    return if @report.user_id == current_user.id
-
-    redirect_to reports_path
-  end
+  def edit; end
 
   def create
     @report = Report.new(report_params)
@@ -55,7 +50,7 @@ class ReportsController < ApplicationController
   end
 
   def set_report
-    @report = Report.find(params[:id])
+    @report = current_user.reports.find(params[:id])
   end
 
   def report_params
