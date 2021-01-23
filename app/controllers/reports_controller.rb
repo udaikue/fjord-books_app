@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
   before_action :set_commentable, only: :show
 
   def index
-    @reports = Report.all
+    @reports = Report.order(:id)
   end
 
   def show
