@@ -24,7 +24,7 @@
   <%= l @commentable.created_at, format: :short %>
 </p>
 
-<%= render 'comments/comments' %>
+<%= render 'comments/comments', comments: @comments %>
 
 <% if User.find(@commentable.user_id) == current_user %>
   <%= link_to t('views.common.edit'), edit_report_path(@commentable) %> |

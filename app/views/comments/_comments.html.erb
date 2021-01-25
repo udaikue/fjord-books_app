@@ -2,7 +2,7 @@
 
 <table>
   <tbody>
-  <% @comments.each do |comment| %>
+  <% comments.each do |comment| %>
     <tr>
       <td><%= comment.content %></td>
       <% if User.find(comment.user_id).name.empty? %>
