@@ -2,15 +2,14 @@
 
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[edit update destroy]
-  before_action :set_commentable, only: :show
 
   def index
     @reports = Report.order(:id)
   end
 
   def show
-    @comments = @commentable.comments
-    @comment = Comment.new
+    @report = Report.find(params[:id])
+    @comments = @report.comments
   end
 
   def new
@@ -44,10 +43,6 @@ class ReportsController < ApplicationController
   end
 
   private
-
-  def set_commentable
-    @commentable = Report.find(params[:id])
-  end
 
   def set_report
     @report = current_user.reports.find(params[:id])

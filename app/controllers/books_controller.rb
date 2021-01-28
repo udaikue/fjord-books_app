@@ -2,15 +2,13 @@
 
 class BooksController < ApplicationController
   before_action :set_book, only: %i[show edit update destroy]
-  before_action :set_commentable, only: :show
 
   def index
     @books = Book.order(:id).page(params[:page])
   end
 
   def show
-    @comments = @commentable.comments
-    @comment = Comment.new
+    @comments = @book.comments
   end
 
   def new
@@ -43,10 +41,6 @@ class BooksController < ApplicationController
   end
 
   private
-
-  def set_commentable
-    @commentable = Book.find(params[:id])
-  end
 
   def set_book
     @book = Book.find(params[:id])

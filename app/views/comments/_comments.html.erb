@@ -5,23 +5,19 @@
   <% comments.each do |comment| %>
     <tr>
       <td><%= comment.content %></td>
-      <% if User.find(comment.user_id).name.empty? %>
-        <td><%= User.find(comment.user_id).email %></td>
-      <% else %>
-        <td><%= User.find(comment.user_id).name %></td>
-      <% end %>
+      <td><%= comment.user.name_or_email %></td>
       <td><%= l comment.created_at, format: :short %></td>
-      <% if User.find(comment.user_id) == current_user %>
-        <td><%= link_to t('views.common.destroy'), [@commentable, comment],  method: :delete, data: { confirm: t('views.common.delete_confirm') } %></td>
+      <% if comment.user == current_user %>
+        <td><%= link_to t('views.common.destroy'), [commentable, comment],  method: :delete, data: { confirm: t('views.common.delete_confirm') } %></td>
       <% end %>
     </tr>
   <% end %>
   </tbody>
 </table>
 
-<%= form_with(model: [@commentable, @comment], method: :post) do |form| %>
+<%= form_with(model: [commentable, Comment.new], method: :post) do |form| %>
   <div class="field">
-    <%= form.text_area :content %>
+    <%= form.text_area :content, required: true %>
   </div>
 
   <div class="actions">

@@ -4,14 +4,10 @@ class CommentsController < ApplicationController
   before_action :set_commentable
 
   def create
-    @comment = @commentable.comments.new(comment_params)
-    @comment.user_id = current_user.id
-
-    if @comment.save
-      redirect_to @commentable
-    else
-      redirect_to controller: :reports, action: :show, id: params[:report_id]
-    end
+    comment = @commentable.comments.new(comment_params)
+    comment.user = current_user
+    comment.save!
+    redirect_to @commentable
   end
 
   def destroy
