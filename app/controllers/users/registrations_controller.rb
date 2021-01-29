@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  def destroy
-    Comment.where(user_id: current_user.id).destroy_all
-    User.find(current_user.id).destroy
-    redirect_to users_path
-  end
-
   protected
 
   # Override
