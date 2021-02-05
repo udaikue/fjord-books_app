@@ -4,18 +4,18 @@ require 'test_helper'
 
 class ReportTest < ActiveSupport::TestCase
   test '#editable?' do
-    me = User.create!(email: 'me@example.com', password: 'password')
-    she = User.create!(email: 'she@example.com', password: 'password')
+    alice = users(:alice)
+    users(:bob)
 
-    my_report = Report.create!(user_id: me.id, title: 'My Report', content: 'これは私の日報です。')
-    assert my_report.editable?(me)
+    alice_report = Report.create(user_id: users(:alice).id, title: 'Aliceの日報', content: 'これはアリスの日報です。')
+    assert alice_report.editable?(alice)
 
-    her_report = Report.create!(user_id: she.id, title: 'Her Report', content: 'これは彼女の日報です。')
-    assert_not her_report.editable?(me)
+    bob_report = Report.create(user_id: users(:bob).id, title: 'Bobの日報', content: 'これはボブの日報です。')
+    assert_not bob_report.editable?(alice)
   end
 
   test '#created_on' do
-    report = Report.create!(user_id: users(:test).id, title: 'test', content: 'This is test.')
+    report = Report.create(user_id: users(:test).id, title: 'test', content: 'This is test.')
 
     assert_not_instance_of(Date, report)
     assert_instance_of(Date, report.created_on)

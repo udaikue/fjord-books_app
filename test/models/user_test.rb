@@ -4,8 +4,8 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   test '#following?' do
-    me = User.create!(email: 'me@example.com', password: 'password')
-    she = User.create!(email: 'she@example.com', password: 'password')
+    me = User.create(email: 'me@example.com', password: 'password')
+    she = User.create(email: 'she@example.com', password: 'password')
 
     assert_not me.following?(she)
     me.follow(she)
@@ -13,8 +13,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test '#followed_by?' do
-    me = User.create!(email: 'me@example.com', password: 'password')
-    she = User.create!(email: 'she@example.com', password: 'password')
+    me = User.create(email: 'me@example.com', password: 'password')
+    she = User.create(email: 'she@example.com', password: 'password')
 
     assert_not me.followed_by?(she)
     she.follow(me)
@@ -22,8 +22,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test '#follow' do
-    me = User.create!(email: 'me@example.com', password: 'password')
-    she = User.create!(email: 'she@example.com', password: 'password')
+    me = User.create(email: 'me@example.com', password: 'password')
+    she = User.create(email: 'she@example.com', password: 'password')
 
     assert_not me.following?(she)
     me.follow(she)
@@ -31,8 +31,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test '#unfollow' do
-    me = User.create!(email: 'me@example.com', password: 'password')
-    she = User.create!(email: 'she@example.com', password: 'password')
+    me = User.create(email: 'me@example.com', password: 'password')
+    she = User.create(email: 'she@example.com', password: 'password')
 
     me.follow(she)
     assert me.following?(she)
