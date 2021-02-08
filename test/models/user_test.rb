@@ -8,7 +8,7 @@ class UserTest < ActiveSupport::TestCase
     she = User.create(email: 'she@example.com', password: 'password')
 
     assert_not me.following?(she)
-    me.follow(she)
+    me.active_relationships.find_or_create_by!(following_id: she.id)
     assert me.following?(she)
   end
 
@@ -25,9 +25,9 @@ class UserTest < ActiveSupport::TestCase
     me = User.create(email: 'me@example.com', password: 'password')
     she = User.create(email: 'she@example.com', password: 'password')
 
-    assert_not me.following?(she)
+    assert_not me.active_relationships.where(following_id: she.id).exists?
     me.follow(she)
-    assert me.following?(she)
+    assert me.active_relationships.where(following_id: she.id).exists?
   end
 
   test '#unfollow' do
